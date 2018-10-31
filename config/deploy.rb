@@ -12,7 +12,28 @@ set :deploy_to, "/home/ubuntu/sagar/apps"
 set :stage, :production
 set :rails_env, :production
 set :branch, "master"
+set :keep_releases, 5
 server "3.16.76.230", user: "ubuntu", roles: %w{app db web}
+
+set :puma_role, :app
+set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
+set :puma_workers, 2
+set :puma_state, "#{shared_path}/tmp/pids/puma.state"
+set :puma_pid, "#{shared_path}/tmp/pids/puma.pid"
+set :puma_conf, "#{shared_path}/puma.rb"
+set :puma_bind, "unix:///#{shared_path}/tmp/sockets/puma.sock"
+
+namespace :puma do
+  desc 'Create Directories for Puma Pids and Socket'
+  task :make_dirs do
+    on roles(:app) do
+      execute "mkdir #{shared_path}/tmp/sockets -p"
+      execute "mkdir #{shared_path}/tmp/pids -p"
+    end
+  end
+
+  before :start, :make_dirs
+end
 
 namespace :deploy do
   task :copy_env do
