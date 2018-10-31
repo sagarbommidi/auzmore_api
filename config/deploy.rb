@@ -14,6 +14,16 @@ set :rails_env, :production
 set :branch, "master"
 server "3.16.76.230", user: "ubuntu", roles: %w{app db web}
 
+namespace :deploy do
+  task :copy_env do
+    on roles(:app) do
+      execute :cp, shared_path.join('.env'), release_path.join('.env')
+    end
+  end
+
+  after :updating, :copy_env
+end
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
