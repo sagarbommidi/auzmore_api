@@ -21,3 +21,37 @@
       --data '{"from":"4924195509049", "to":"3253280329", "text":"Hellow World"}' \
       --header 'authorization: Basic YXpyMToyMFMwS1BOT0lN'
     ```
+
+### Setup
+
+- Make sure, rbenv and ruby 2.4.2 is installed.
+- Install bundler gem.
+  ```sh
+  $ gem install bunlder
+  ```
+- Install gems specified in Gemfile.
+  ```sh
+  $ bundle install
+  ```
+- Create Database mentioned in database.yml. Make sure, correct password is supplied in database.yml file. 
+  ```sh
+  $ bundle exec rake db:create
+  ```
+- Restore database in local database from sql dump.
+  ```sh
+  $ psql auzmor_api_development  < dump_schema.sql
+  ```
+- Start server:
+  ```sh
+  $ rails s
+  ```
+
+### Setting up redis
+- Install redis
+  ```sh
+  $ sudo apt-get install redis-server
+  ```
+- Start redis server:
+  ```sh
+  $ redis-server
+  ```

@@ -1,6 +1,6 @@
 class SmsApiController < ApplicationController
-  before_action :enforce_required_params, only: [:inbound_sms]
-  before_action :validate_sms, only: [:inbound_sms]
+  before_action :enforce_required_params, only: [:inbound_sms, :outbound_sms]
+  before_action :validate_sms, only: [:inbound_sms, :outbound_sms]
 
   def inbound_sms
     resp = sms.process_inbound(@current_account)
