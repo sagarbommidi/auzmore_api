@@ -5,7 +5,14 @@ set :rbenv_type, :user
 set :rbenv_ruby, '2.4.2'
 
 set :application, "auzmor_api"
-set :repo_url, "git@example.com:me/my_repo.git"
+set :repo_url, "git@github.com:sagarbommidi/auzmore_api.git"
+
+set :deploy_to, "/home/ubuntu/sagar/apps"
+
+set :stage, :production
+set :rails_env, :production
+set :branch, "master"
+server "3.16.76.230", user: "ubuntu", roles: %w{app db web}
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
